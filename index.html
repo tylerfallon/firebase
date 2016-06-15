@@ -1,0 +1,95 @@
+<!doctype html>
+<html>
+<head>
+	<title>Employee Tracker</title>
+	<meta charset='utf-8'>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+	<!-- Latest compiled JavaScript -->
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	<link rel='stylesheet' href='style.css'>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src='http://cdn.firebase.com/js/client/2.4.1/firebase.js'></script>
+	<script src='script.js'></script>
+	
+</head>
+<body>
+	<div class="container">
+  	<div class="jumbotron">
+  		<div id='thejumb'>
+    	<center>
+    		<h1>New Jersey Train Times</h1> 
+    		<p>A timetable of all trains in the Garden State.</p> 
+    	</center>
+    </div>
+  	</div>
+  	<div class="panel-group">
+			<div class="panel panel-primary">
+      <div class="panel-heading">Train Times</div>
+      <div class="panel-body">  
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Employee</th>
+        <th></th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>
+
+
+
+      </div>
+    </div>
+  		<div class="panel panel-primary">
+      <div class="panel-heading">Current Employees</div>
+      <div class="panel-body">
+			<form role="form">
+  <div class="form-group">
+    <label for="text">Employee Name</label>
+    <input type="text" class="form-control" id="name">
+  </div>
+  <div class="form-group">
+    <label for="text">Role</label>
+    <input type="text" class="form-control" id="role">
+  </div>
+  <div class="form-group">
+    <label for="text">Start Date (DD/MM/YY - ex: 01/01/89)</label>
+    <input type="text" class="form-control" id="startdate">
+  </div>
+  <div class="form-group">
+    <label for="text">Monthly Rate</label>
+    <input type="text" class="form-control" id="monthlyrate">
+  </div>
+    <button type="submit" class="btn btn-primary" id='submitbutton'>Submit</button><br>
+</form>
+
+
+      </div>
+    </div>
+  	</div>
+	</div>
+
+	</div>
+</body>
+</html>
