@@ -6,9 +6,9 @@ var sessionRef = dataRef.child('trainTime')
 
 	$('#submitbutton').on('click', function() {
 		var name = $('#name').val();
-		var destination = $('#role').val();
-		var time = $('#startdate').val();
-		var frequency = $('#monthlyrate').val();
+		var destination = $('#destination').val();
+		var time = $('#frequency').val();
+		var frequency = $('#traintime').val();
 		dataRef.push({
 			name: name,
 			destination: destination, 
@@ -17,9 +17,9 @@ var sessionRef = dataRef.child('trainTime')
 		});
 
 		$('#name').val('');
-		$('#role').val('');
-		$('#startdate').val('');
-		$('#monthlyrate').val('');
+		$('#destination').val('');
+		$('#frequency').val('');
+		$('#traintime').val('');
 		return false;
 	});
 
