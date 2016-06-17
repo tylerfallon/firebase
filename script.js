@@ -10,12 +10,15 @@ var sessionRef = dataRef.child('trainTime')
 		var time = $('#frequency').val();
 		var frequency = $('#traintime').val();
 		var minaway = $('#minaway').val();
+		var nextarrival = moment().format('LT');
+
 		dataRef.push({
 			name: name,
 			destination: destination, 
 			time: time,
 			frequency: frequency,
-			minaway: minaway
+			minaway: minaway,
+			nextarrival: nextarrival
 		});
 
 		$('#name').val('');
@@ -27,19 +30,21 @@ var sessionRef = dataRef.child('trainTime')
 	});
 
 
+
 dataRef.on("child_added", function(snapshot) { 	
 	var tableRow = $('<tr>');	
-	var trainInfo = [snapshot.val().name, snapshot.val().destination, snapshot.val().time, snapshot.val().frequency, snapshot.val().minaway];
+	var trainInfo = [snapshot.val().name, snapshot.val().destination, snapshot.val().time, snapshot.val().frequency, snapshot.val().minaway, snapshot.val().nextarrival];
 	console.log(trainInfo);
+	
 	for (var i = 0; i < trainInfo.length;i++){
 		var tableData = $('<td>');
 		tableData.html(trainInfo[i]);
 		tableData.attr('id', i);
 		tableRow.append(tableData)
 	}
+
 	$('#trainInfo > tBody:last-child').append(tableRow);
 	return false;
 
-// Handle the errors
 })
 });
