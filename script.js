@@ -1,50 +1,66 @@
 $(document).ready(function() {
-
 var dataRef = new Firebase("https://week7rcb.firebaseio.com/");
-var trainList = dataRef.child('trainList');
-var sessionRef = dataRef.child('trainTime')
 
-	$('#submitbutton').on('click', function() {
-		var name = $('#name').val();
-		var destination = $('#destination').val();
-		var time = $('#frequency').val();
-		var frequency = $('#traintime').val();
-		var minaway = $('#minaway').val();
-		var nextarrival = moment().format('LT');
+// Get the values in each field and store them in variables
+$("#submit").on("click", function() {
+	var name = $('#name').val();
+	var destination = $('#destination').val();
+	var firstTrain = $('#fTrain').val();
+	var frequency = $('#frequency').val();
 
-		dataRef.push({
-			name: name,
-			destination: destination, 
-			time: time,
-			frequency: frequency,
-			minaway: minaway,
-			nextarrival: nextarrival
-		});
+// Clear form fields after submitting
+	$('#name').val('');
+	$('#destination').val('');
+	$('#frequency').val('');
+	$('#fTrain').val('');
 
-		$('#name').val('');
-		$('#destination').val('');
-		$('#frequency').val('');
-		$('#traintime').val('');
-		$('#minaway').val('');
-		return false;
+// Push data to Firebase
+	dataRef.push({
+		name: name,
+		destination: destination,
+		firstTrain: firstTrain,
+		frequency: frequency
 	});
-
-
-
-dataRef.on("child_added", function(snapshot) { 	
-	var tableRow = $('<tr>');	
-	var trainInfo = [snapshot.val().name, snapshot.val().destination, snapshot.val().time, snapshot.val().frequency, snapshot.val().minaway, snapshot.val().nextarrival];
-	console.log(trainInfo);
-	
-	for (var i = 0; i < trainInfo.length;i++){
-		var tableData = $('<td>');
-		tableData.html(trainInfo[i]);
-		tableData.attr('id', i);
-		tableRow.append(tableData)
-	}
-
-	$('#trainInfo > tBody:last-child').append(tableRow);
 	return false;
+});
 
-})
+// Store firebase data in variables
+dataRef.on("child_added", function(snapshot){
+	var name = snapshot.val().name;
+	var destination = snapshot.val().destination;
+	var frequency = snapshot.val().frequency;
+	var firstTrain = snapshot.val().firstTrain;
+
+// Make variables with the current time and first train time, converted to MomentJS format
+	var timeHour = moment().format('H');
+	var timeMin = moment().format('m');
+	var ftHour = moment(firstTrain, "HH:mm").format('H');
+	var ftMin = moment(firstTrain, "HH:mm").format('m');
+
+	var ftMoment = (ftHour * 60) + (ftMin * 1);
+	var timeMoment = (timeHour * 60) + (timeMin * 1);
+
+// Find how much time has passed since the first train
+	var diff = timeMoment - ftMoment;
+
+// Find how many trains have come so far
+	var trainsSinceFirst = Math.floor(diff/frequency);
+
+// Find how long until the next train comes
+	var nextArrival = ((trainsSinceFirst + 1) * frequency) + ftMoment;
+	
+// Handle negative values for minAway and nextArrival
+	if (ftMoment < timeMoment) {
+		var minAway = nextArrival - timeMoment;
+		var nextArrival = moment().add(minAway, 'minutes').format('HH:mm');
+	} 
+	else {
+		var nextArrival = firstTrain;
+		var minAway = ftMoment - timeMoment;
+	};
+	
+	// Make a new row and append all the data
+	$("#trainTable").append("<tr><td>" + name + "</td><td>" + destination + "</td><td>" + frequency + "</td><td>" + nextArrival + "</td><td>" + minAway + "</td></tr>");
+
+	});
 });
